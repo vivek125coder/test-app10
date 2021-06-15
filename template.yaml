@@ -1,0 +1,136 @@
+apiVersion: backstage.io/v1beta2
+kind: Template
+metadata:
+  name: backstage-java-template
+  title: Java Springboot Microservice
+  description: Create a simple microservice using Spring Boot Java and Gradle
+  tags:
+    - recommended
+    - java
+    - springboot
+    - gradle
+spec:
+  owner: AppDirect
+  templater: cookiecutter
+  type: service
+  path: '.'
+  parameters:
+    - title: Fill in the Service Specific Parameters
+      required:
+        - name
+        - description
+        - type
+        - applicationType
+        - languageVersion
+        - javaPkgName
+      properties:
+        name:
+          title: Name
+          type: string
+          description: Unique name of the microservice
+          ui:autofocus: true
+        description:
+          title: Description
+          type: string
+          description: Help others understand what this service does.
+          ui:widget: textarea
+        type:
+          title: Type
+          type: string
+          description: Type of microservice
+          enum:
+            - "application"
+            - "library"
+          ui:widget: radio
+        applicationType:
+          title: Application Type
+          type: string
+          description: Type of application
+          enum:
+            - "deployment"
+            - "dockerImage"
+            - "static"
+          ui:widget: radio
+        languageVersion:
+          title: Language Version
+          type: string
+          description: version of language used
+          enum:
+            - "8"
+            - "11"
+          ui:widget: radio
+        javaPkgName:
+          title: Java Package Name
+          type: string
+          description: name of the package using which sample structure to be created
+          default: 'helloworld'
+        slack:
+          title: Slack Notification Channel
+          type: string
+          description: slack channel to receive notifications about build and deploy status
+          default: ''
+        database:
+          title: Database
+          type: object
+          properties:
+            databaseType:
+              title: Database Type
+              type: string
+              description: Type of database to be used
+              enum:
+                - ''
+                - "mysql"
+                - "mongodb"
+            databaseName:
+              title: Database Name
+              type: string
+              description: Name of the database
+            dbHost:
+              title: Database Host
+              type: string
+              description: Name of the database host
+          dependencies:
+            databaseType:
+              - dbHost
+              - databaseName
+            dbHost:
+              - databaseName
+              - databaseType
+            databaseName:
+              - databaseType
+              - dbHost
+
+        clusters:
+          title: Clusters
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                title: Name of cluster
+                type: string
+                enum:
+                  - 'manifests-azr.test.shared.use1'
+                  - 'manifests-dt.test.bmp'
+                  - 'manifests-shared.load.us-east-1'
+                  - 'manifests-shared.test.us-east-1'
+                  - 'manifests-swisscom.test.appuioch'
+                  - 'manifests-telstra.test.ap-south-2'
+                  - 'manifests-jlr.stage.use1'
+                  - 'manifests-jlr.test.use1'
+                  - 'manifests-crashburn.infra.use1'
+                  - 'manifests-att.prod.use1'
+                  - 'manifests-azr.prod.shared.use1'
+                  - 'manifests-azr.prod.shared.euw1'
+                  - 'manifests-comcast.prod.use1'
+                  - 'manifests-dt.bmp'
+                  - 'manifests-shared.prod.ap-northeast-2'
+                  - 'manifests-shared.prod.eu-central-1'
+                  - 'manifests-shared.prod.us-east-1'
+                  - 'manifests-swisscom.prod.appuioch'
+                  - 'manifests-telstra.prod.ap-southeast-2'
+                  - 'manifests-jlr.chinaprod.cn1'
+                  - 'manifests-jlr.chinaqa1.cn1'
+                  - 'manifests-jlr.feuprod.euw1'
+                  - 'manifests-jlr.prod.use1'
+                  - 'manifests-tools.infra.use1'
